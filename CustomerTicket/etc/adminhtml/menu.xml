@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Inchoo_CustomerTicket::ticket_access"
+             title="Customer Support"
+             module="Inchoo_CustomerTicket"
+             sortOrder="400"
+             parent="Magento_Customer::customer"
+             action="support/tickets/index"
+             resource="Inchoo_CustomerTicket::ticket_access"/>
+    </menu>
+</config>

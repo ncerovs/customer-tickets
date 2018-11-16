@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">support_tickets_listing.support_tickets_listing_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>support_tickets_columns</spinner>
+        <deps>
+            <dep>support_tickets_listing.support_tickets_listing_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="sample06_news_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">ticket_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Inchoo_CustomerTicket::ticket_access</aclResource>
+        <dataProvider class="Inchoo\CustomerTicket\Ui\Component\Listing\DataProvider" name="support_tickets_listing_data_source">
+            <settings>
+                <requestFieldName>ticket_id</requestFieldName>
+                <primaryFieldName>ticket_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
+                </item>
+            </argument>
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+            <filterSelect name="store_id" provider="${ $.parentName }">
+                <settings>
+                    <captionValue>0</captionValue>
+                    <options class="Inchoo\CustomerTicket\Ui\Component\Listing\Column\Options"/>
+                    <label translate="true">Store View</label>
+                    <dataScope>store_id</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+        </filters>
+
+        <massaction name="listing_massaction">
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="support/tickets/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+            <action name="close">
+                <settings>
+                    <url path="support/tickets/massClose"/>
+                    <type>close</type>
+                    <label translate="true">Close</label>
+                </settings>
+            </action>
+        </massaction>
+
+        <!--
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        -->
+
+        <paging name="listing_paging"/>
+
+    </listingToolbar>
+
+    <columns name="support_tickets_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>ticket_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="ticket_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="subject">
+            <settings>
+                <filter>subject</filter>
+                <label translate="true">Subject</label>
+            </settings>
+        </column>
+        <column name="customer_first_name">
+            <settings>
+                <filter>customer_first_name</filter>
+                <label translate="true">Customer First Name</label>
+            </settings>
+        </column>
+        <column name="customer_last_name">
+            <settings>
+                <filter>customer_last_name</filter>
+                <label translate="true">Customer Last Name</label>
+            </settings>
+        </column>
+        <column name="ticket_status" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Inchoo\CustomerTicket\Model\Tickets\Source\IsActive"/>
+                <filter>select</filter>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>created_at</filter>
+                <label translate="true">Created At</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Inchoo\CustomerTicket\Ui\Component\Listing\Column\EditActions">
+            <settings>
+                <indexField>ticket_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

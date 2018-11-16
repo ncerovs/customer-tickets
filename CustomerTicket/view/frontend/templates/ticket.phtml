@@ -1,0 +1,55 @@
+<?php
+$ticket = $block->getTicket();
+?>
+
+<?php if(!empty($ticket)) : ?>
+    <div class="page-title-wrapper">
+        <h1 class="page-title">
+            <span class="base"><?= $ticket->getSubject() ?></span>
+        </h1>
+        <?php if($ticket->getTicketStatus() == 1) : ?>
+        <span class="order-status">Active</span>
+        <a href="<?= $block->getUrl('support/tickets/close', ['id' => $ticket->getId()]) ?>"><?= __('Close ticket') ?></a>
+        <?php else : ?>
+        <span class="order-status">Closed</span>
+        <?php endif; ?>
+        <div class="order-date">
+            <date><?= date('d M Y, H:i', strtotime($ticket->getCreatedAt())) ?></date>
+        </div>
+    </div>
+
+    <div class="ticket-details page-footer">
+        <h3><?= $ticket->getMessage() ?></h3>
+        <hr>
+        <div class="ticket-replies-wrapper">
+            <small><?= __('Ticket replies:') ?></small>
+            <?php foreach($block->getTicketReplies($ticket->getId()) as $reply) : ?>
+            <div class="reply <?= ($reply['is_admin']) ? 'admin' : 'customer' ?>">
+                <p><?= $reply['message'] ?> - <small><?= date('d M Y, H:i', strtotime($reply['created_at'])) ?></small></p>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <?php if($ticket->getTicketStatus() == 1) : ?>
+    <form id="form-validate" action="<?= $block->getUrl('support/replies/addreply') ?>" method="post">
+        <?= $block->getBlockHtml('formkey') ?>
+        <input type="hidden" name="ticket_id" value="<?= $ticket->getId() ?>">
+        <fieldset class="fieldset">
+            <div class="field reply">
+                <label for="reply" class="label"><span><?= __('Add reply') ?></span></label>
+                <div class="control">
+                    <textarea id="reply" name="reply" placeholder="<?= __('Message') ?>" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="action save primary" data-action="save-ticket" title="Add reply">
+                        <span><?= __('Add reply') ?></span>
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <?php endif; ?>
+<?php endif; ?>

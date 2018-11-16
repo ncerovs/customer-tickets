@@ -1,0 +1,24 @@
+<form id="ticket-form" action="<?= $block->getUrl('support/tickets/save') ?>" method="post" data-mage-init='{"validation":{}}'>
+    <?= $block->getBlockHtml('formkey') ?>
+    <fieldset class="fieldset">
+        <div class="field subject required">
+            <label for="subject" class="label"><span><?= __('Subject') ?></span></label>
+            <div class="control">
+                <input type="text" id="subject" class="required" name="subject" placeholder="<?= __('Ticket subject') ?>">
+            </div>
+        </div>
+        <div class="field message required">
+            <label for="message" class="label"><span><?= __('Message') ?></span></label>
+            <div class="control">
+                <textarea id="message" class="required" name="message" placeholder="<?= __('Ticket message') ?>" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action save primary" data-action="save-ticket" title="Save Ticket">
+                    <span><?= __('Submit') ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>

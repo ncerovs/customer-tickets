@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">support_tickets_ticket.support_tickets_ticket_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <namespace>support_tickets_ticket</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>support_tickets_ticket.support_tickets_ticket_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="back" class="Inchoo\CustomerTicket\Block\Adminhtml\Tickets\Edit\BackButton"/>
+            <button name="delete" class="Inchoo\CustomerTicket\Block\Adminhtml\Tickets\Edit\DeleteButton"/>
+            <button name="save" class="Inchoo\CustomerTicket\Block\Adminhtml\Tickets\Edit\SaveButton"/>
+        </buttons>
+    </settings>
+
+    <dataSource name="support_tickets_ticket_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="support/replies/addreply"/>
+        </settings>
+        <dataProvider class="Inchoo\CustomerTicket\Ui\Component\Form\DataProvider" name="support_tickets_ticket_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>ticket_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label />
+        </settings>
+
+        <hidden name="ticket_id" sortOrder="1">
+            <settings>
+                <dataScope>ticket_id</dataScope>
+            </settings>
+        </hidden>
+
+        <container name="html_content" sortOrder="160">
+            <htmlContent name="html_content">
+                <block name="ticket" class="Inchoo\CustomerTicket\Block\Adminhtml\Tickets\Ticket" template="Inchoo_CustomerTicket::ticket.phtml"/>
+            </htmlContent>
+        </container>
+
+        <textarea name="reply" sortOrder="20">
+            <settings>
+                <label translate="true">Add reply</label>
+                <dataScope>reply</dataScope>
+            </settings>
+        </textarea>
+    </fieldset>
+</form>

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="inchoo_ticket_email" label="Ticket Support Email Template" file="inchoo_ticket_email.html" type="html" module="Inchoo_TicketMailer" area="frontend"/>
+</config>

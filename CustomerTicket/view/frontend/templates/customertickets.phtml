@@ -1,0 +1,31 @@
+<?php $tickets = $block->getTickets(); ?>
+
+<div class="table-wrapper">
+    <table class="data table history" id="my-tickets-table">
+        <caption class="table-caption">Tickets</caption>
+        <thead>
+            <tr>
+                <th scope="col" class="col id">Ticket #</th>
+                <th scope="col" class="col subject">Subject</th>
+                <th scope="col" class="col status">Status</th>
+                <th scope="col" class="col date">Date</th>
+                <th scope="col" class="col actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($tickets as $ticket) : ?>
+                <tr>
+                    <td><?= $ticket->getId() ?></td>
+                    <td><?= $ticket->getSubject() ?></td>
+                    <td><?= ($ticket->getTicketStatus() == 1) ? 'Active' : 'Closed' ?></td>
+                    <td><?= date('d M Y, h:i', strtotime($ticket->getCreatedAt())) ?></td>
+                    <td>
+                        <a href="<?= $block->getUrl('support/tickets/ticket/', ['id' => $ticket->getId()]) ?>">
+                            <span>View Ticket</span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

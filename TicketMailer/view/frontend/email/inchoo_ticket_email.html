@@ -1,0 +1,12 @@
+{{template config_path="design/email/header_template"}}
+<table>
+    <h1>New ticket has been submitted</h1>
+    <h3>Ticket info:</h3>
+    <ul>
+        <li><strong>Ticket ID:</strong> #{{var ticket_id}}</li>
+        <li><strong>Subject:</strong> {{var ticket_subject}}</li>
+        <li><strong>Message:</strong> {{var ticket_message}}</li>
+        <li><a href="{{var redirect_link}}">Click to open in admin</a></li>
+    </ul>
+</table>
+{{template config_path="design/email/footer_template"}}
